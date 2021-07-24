@@ -3,19 +3,24 @@ showNotes();
 
 /*----------Add the note of the user to the local storage-------*/
 let addBtn = document.getElementById("addBtn");
-addBtn.addEventListener("click", function (e) {
+addBtn.addEventListener("click", function () {
   let addTxt = document.getElementById("addTxt");
   let notes = localStorage.getItem("notes");
-  if (notes == null) {
-    notesObj = [];
+  if (addTxt.value == "") {
+    alert("This field cannot be empty");
   }
   else {
-    notesObj = JSON.parse(notes);
+    if (notes == null) {
+      notesObj = [];
+    }
+    else {
+      notesObj = JSON.parse(notes);
+    }
+    notesObj.push(addTxt.value);
+    localStorage.setItem("notes", JSON.stringify(notesObj));
+    addTxt.value = "";
+    showNotes();
   }
-  notesObj.push(addTxt.value);
-  localStorage.setItem("notes", JSON.stringify(notesObj));
-  addTxt.value = "";
-  showNotes();
 });
 
 /* Function to show elements from localStorage*/
@@ -43,7 +48,6 @@ function showNotes() {
     notesElm.innerHTML = html;
   }
   else {
-    
     notesElm.innerHTML = ``;
   }
 }
